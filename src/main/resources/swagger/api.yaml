@@ -1,0 +1,119 @@
+openapi: 3.0.3
+info:
+  title: Swagger Balestech Trading Stocks - OpenAPI 3.0
+  description: |-
+    API utilizada para disponibilizar serviços para o sistema Trading Stocks
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: localhost:8085/api/v1
+tags:
+  - name: tradingStocks
+    description: Manipule uma trading
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+paths:
+  /trading:
+    put:
+      tags:
+        - tradingStocks
+      summary: Insira tradings
+      description: Inserir uma trading
+      operationId: insertTrading
+      requestBody:
+        description: Insira os dados de uma nova trading
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tradingStocksRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tradingStocksResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Pet not found
+        '405':
+          description: Validation exception
+      security:
+        - petstore_auth:
+            - write:pets
+            - read:pets
+components:
+  schemas:
+    tradingStocksRequest:
+      required:
+        - codeStock
+        - date
+        - value
+        - quantity
+      type: object
+      properties:
+        codeStock:
+          type: string
+          example: AESB3
+        date:
+          type: string
+          format: date
+          example: 01/05/2023
+        value:
+          type: double
+          example: 20.25
+        quantity:
+          type: integer
+          format: int64
+          example: 1000
+    tradingStocksResponse:
+      required:
+        - id
+        - codeStock
+        - date
+        - value
+        - quantity
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 10
+        codeStock:
+          type: string
+          example: AESB3
+        date:
+          type: string
+          format: date
+          example: 01/05/2023
+        value:
+          type: double
+          example: 20.25
+        quantity:
+          type: integer
+          format: int64
+          example: 1000
+  securitySchemes:
+    petstore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
+          scopes:
+            write:pets: modify pets in your account
+            read:pets: read your pets
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
