@@ -2,40 +2,48 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<!--
+      **
+      * SPRING BOOT
+      ** -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.1.0-SNAPSHOT</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
+
+	<!--
+      **
+      * Service Finance System
+      ** -->
 	<groupId>com.balestech</groupId>
 	<artifactId>finance</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>finance</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Investment Financial System</description>
+
+	<!--
+      **
+      * PROPERTIES
+      ** -->
 	<properties>
 		<java.version>20</java.version>
-		<swagger-annotations.version>1.5.22</swagger-annotations.version>
-
-		<gson.version>2.8.5</gson.version>
-		<gson-fire.version>1.8.3</gson-fire.version>
-		<oauth2.version>1.0.1</oauth2.version>
-
-
 	</properties>
+
+	<!--
+      **
+      * DEPENDENCIES
+      ** -->
 	<dependencies>
       <!--
         **
-        *
         * INÍCIO DA SESSÃO DE DEPENDÊNCIAS
-        *
         ** -->
 
 		<!--
            **
-           *
            * Ponto de partida comum para a construção de aplicativos web usando o Spring Boot
-           *
            **
          -->
 		<dependency>
@@ -45,10 +53,8 @@
 
 		<!--
            **
-           *
            * Essa biblioteca fornece uma série de utilitários e classes auxiliares para manipulação de
            * strings, arrays, datas, números e outras operações comuns em programação Java.
-           *
            **
          -->
 		<dependency>
@@ -59,9 +65,7 @@
 
 		<!--
            **
-           *
            * LOMBOK -> Sintaxe Sugar
-           *
            **
          -->
 		<dependency>
@@ -72,9 +76,7 @@
 
 		<!--
            **
-           *
            * Gera o Swagger em swagger-ui/index.html
-           *
            **
          -->
 		<dependency>
@@ -83,22 +85,40 @@
 			<version>2.0.2</version>
 		</dependency>
 
-
+		<!--
+           **
+           * A dependência org.openapitools:jackson-databind-nullable é uma extensão da biblioteca Jackson DataBind que adiciona
+           * suporte para anotações de nulabilidade no processo de serialização e desserialização de objetos Java para JSON.
+		   *
+		   * Essa extensão é especialmente útil ao trabalhar com a especificação OpenAPI (anteriormente conhecida como Swagger) para descrever APIs.
+           **
+         -->
 		<dependency>
 			<groupId>org.openapitools</groupId>
 			<artifactId>jackson-databind-nullable</artifactId>
 			<version>0.2.6</version>
 		</dependency>
 
-
+		<!--
+           **
+           * A Jakarta Validation API é baseada na especificação Bean Validation, que é um padrão para a validação de objetos em Java.
+           * Ela fornece um conjunto de anotações, como @NotNull, @Size, @Email, @Pattern, entre outras, que podem ser aplicadas
+           * aos campos de um objeto para especificar as regras de validação.
+           **
+         -->
 		<dependency>
 			<groupId>jakarta.validation</groupId>
 			<artifactId>jakarta.validation-api</artifactId>
 			<version>3.0.2</version>
 		</dependency>
 
-
-
+		<!--
+           **
+           * O Jakarta Servlet API fornece um conjunto de classes e métodos para manipular solicitações HTTP,
+           * gerar respostas, gerenciar sessões, lidar com cookies, realizar redirecionamentos, entre outras funcionalidades relacionadas
+           * à comunicação entre um cliente (navegador) e um servidor web.
+           **
+         -->
 		<dependency>
 			<groupId>jakarta.servlet</groupId>
 			<artifactId>jakarta.servlet-api</artifactId>
@@ -106,18 +126,12 @@
 			<scope>provided</scope>
 		</dependency>
 
-
-
-
-
 		<!--
            **
-           *
            * Dependência do Spring Boot que fornece suporte para testes automatizados em aplicativos Spring Boot:
            * Além do JUnit e do Spring Test, a dependência inclui outras ferramentas de teste úteis, como o AssertJ
            * para asserções fluentes, o Hamcrest para asserções mais flexíveis, o Mockito para simulação de objetos
            * e o Selenium para testes de interface do usuário.
-           *
            **
          -->
 		<dependency>
@@ -125,9 +139,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-
-
 
 	<!--
       **
@@ -148,10 +159,8 @@
 
 			<!--
 			  **
-			  *
 			  * O spring-boot-maven-plugin é um plugin do Maven específico do Spring Boot que fornece recursos adicionais para facilitar o desenvolvimento,
 			  * empacotamento e execução de aplicativos Spring Boot usando o Maven.
-			  *
 			  **
 			-->
 			<plugin>
@@ -161,10 +170,8 @@
 
 			<!--
 			  **
-			  *
 			  * O maven-compiler-plugin é responsável por configurar e controlar a compilação do código-fonte Java em um projeto Maven,
 			  * permitindo que você especifique a versão do Java e outras opções relacionadas à compilação.
-			  *
 			  **
 			-->
 			<plugin>
@@ -178,12 +185,10 @@
 
 			<!--
 			  **
-			  *
 			  * Puglin do Open api para gerar o código a partir do código swagger
 			  *
 			  * Templates Mustaches para Spring:
 			  * https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator/src/main/resources/JavaSpring
-			  *
 			  ** -->
 			<plugin>
 				<groupId>org.openapitools</groupId>
@@ -198,14 +203,12 @@
 							<inputSpec>src/main/resources/swagger/api.yaml</inputSpec>
 							<generatorName>spring</generatorName>
 							<supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
-							<!--<output>${project.build.directory}/generated-sources/swagger</output>-->
 							<modelPackage>com.balestech.finance.model.dto</modelPackage>
 							<apiPackage>com.balestech.finance.rest</apiPackage>
 							<configOptions>
 								<delegatePattern>true</delegatePattern>
 								<implicitHeaders>true</implicitHeaders>
 								<useJakartaEe>true</useJakartaEe>
-								<!--<useTags>true</useTags>-->
 							</configOptions>
 						</configuration>
 					</execution>
