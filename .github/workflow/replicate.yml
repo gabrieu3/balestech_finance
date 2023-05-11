@@ -1,0 +1,23 @@
+name: Replicate Changes
+
+on:
+  push:
+    branches:
+      - release/1.0.0 # Branch que será replicada
+
+jobs:
+  replicate_changes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Replicate changes
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git checkout develop # Nome da branch que receberá as alterações
+          git merge main --no-commit --no-ff # Realiza o merge sem efetivar o commit
+          git commit -m "Replicate changes from main branch"
+          git push origin develop # Nome da branch que receberá as alterações
